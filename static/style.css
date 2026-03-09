@@ -1,0 +1,100 @@
+/* Global */
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: #ffffff;
+    color: #f23333;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #111;
+    text-decoration: none;
+}
+
+h1, h2, h3 {
+    margin: 0 0 10px 0;
+}
+
+/* Header & Navigation */
+header {
+    background: #111;
+    color: #fff;
+    padding: 15px 20px;
+}
+
+header h1 {
+    display: inline-block;
+    margin: 0;
+    font-size: 22px;
+}
+
+nav {
+    display: inline-block;
+    float: right;
+}
+
+nav a {
+    margin-left: 15px;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Main content */
+main {
+    padding: 30px 20px;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #111;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.btn:hover {
+    background: #333;
+}
+
+/* Forms */
+form {
+    margin-top: 20px;
+}
+
+form input, form select, form textarea {
+    padding: 8px;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Tables & lists */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px 0;
+    background: #111;
+    color: #fff;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}

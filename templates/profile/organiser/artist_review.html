@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="artist-review-card">
+
+    <div class="artist-header">
+        <h2>{{ artist.stage_name }}</h2>
+        <p>{{ artist.genre }}</p>
+    </div>
+
+    {% if artist.audio_sample %}
+        <audio controls>
+            <source src="{{ artist.audio_sample.url }}" type="audio/mpeg">
+        </audio>
+    {% endif %}
+
+    <section class="artist-bio">
+        <p>{{ artist.bio }}</p>
+    </section>
+
+    <section class="artist-history">
+        <h3>Past Accepted Events</h3>
+
+        {% if accepted_events %}
+            <ul>
+                {% for booking in accepted_events %}
+                    <li>
+                        {{ booking.event.title }} 
+                        {{ booking.event.date }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No completed events yet.</p>
+        {% endif %}
+    </section>
+
+</div>
+
+
+
+{% endblock %}

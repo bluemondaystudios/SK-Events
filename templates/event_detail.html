@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<section class="events">
+    <h1>Live Events</h1>
+
+    {% for event in events %}
+        <div class="event-card">
+            <h3>{{ event.title }}</h3>
+            <p>{{ event.description|truncatewords:25 }}</p>
+
+            <p>
+                📍 {{ event.location }} <br>
+                📅 {{ event.date }}
+            </p>
+
+            <a href="{% url 'event-detail' event.id %}" class="btn">
+                View Event
+            </a>
+        </div>
+    {% empty %}
+        <p>No events available at the moment.</p>
+    {% endfor %}
+</section>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block title %}Create Event{% endblock %}
+
+{% block content %}
+<h2>Create Event</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <label>Event Title</label>
+    {{ form.title }}
+
+    <label>Event Poster</label>
+    {{ form.image }}
+
+    <button class="btn" type="submit">Publish Event</button>
+</form>
+{% endblock %}

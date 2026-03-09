@@ -1,0 +1,191 @@
+homepage features: 
+            a belt of local, strong brands ...
+            (Makhuduthamaga Municipality, ZAI OAT Hotel, Boiketlong, La Cakes, Hunadi Events, 
+            Pleasure Tsa Manyalo, SK-FM, BUILD-IT...) - SPONSORSHIP & SUPPORT
+
+
+            an animated smooth landing of the current homepage content... i provide the current index.html and style.css code below
+
+            index.html {
+
+            {% extends 'layout.html' %}
+
+            {% block title %}Home{% endblock %}
+
+            {% block content %}
+            <h2>Welcome to SK EVENTS. </h2>
+            <p> <h5>We are here to connect upcoming talented artists to the latest events happening in Limpopo.</h5>  </p>
+            <p> ____________________________________________________</p>
+            <p></p>
+            <P> <i> Are you an Artist who is serious about getting booked? </i> </P>
+            <P> ____________________________________________________ </P>
+            <p>  </p>
+            <p>Choose your path:</p>
+            <ul>
+                <li><a class="btn" href="{% url 'register' %}">Register</a></li>
+                <li><a class="btn" href="{% url 'login' %}">Login</a></li>
+            </ul>
+            {% endblock %}
+
+            }
+
+
+            style.css {
+
+                            /* Global */
+            body {
+                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                background: #ffffff;
+                color: #111111;
+                margin: 0;
+                padding: 0;
+                text-align: center;
+                font-style:normal ;
+                font-size: small;
+                
+            }
+
+            a {
+                color: #111;
+                text-decoration: none;
+            }
+
+            h1, h2, h3 {
+                margin: 0 0 10px 0;    
+            }
+
+
+
+            /* Header & Navigation */
+            header {
+                background: #111;
+                color: #fff;
+                padding: 15px 20px;
+                text-align: initial;
+                font-size: smaller;
+            }
+
+            header h1 {
+                display: inline-block;
+                margin-bottom: 5px;
+                font-size: 20px;
+            }
+
+            nav {
+                display: inline-block;
+                float: right;
+            }
+
+            nav a {
+                margin-left: 15px;
+                color: #fff;
+                font-weight: bold;
+            }
+
+            /* Main content */
+            main {
+                padding: 30px 20px;
+            }
+
+            /* Buttons */
+            .btn {
+                display: inline-block;
+                padding: 10px 20px;
+                background: #111;
+                color: #fff;
+                border-radius: 5px;
+                font-weight: bold;
+                margin: 5px 0;
+            }
+
+            .btn:hover {
+                background: #333;
+            }
+
+            /* Forms */
+            form {
+                margin-top: 20px;
+            }
+
+            form input, form select, form textarea {
+                padding: 8px;
+                margin-bottom: 10px;
+                width: 100%;
+                max-width: 400px;
+                box-sizing: border-box;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            /* Tables & lists */
+            ul {
+                list-style: none;
+                padding: 0;
+            }
+
+            ul li {
+                margin-bottom: 10px;
+                padding: 10px;
+                border: 1px solid #eee;
+                border-radius: 5px;
+            }
+
+            /* Footer */
+            footer {
+                text-align: center;
+                padding: 1px 0;
+                background: #111;
+                color: #fff;
+                position: fixed;
+                width: 100%;
+                bottom: 0;
+                margin-top: 15px;
+            }
+
+            }
+
+
+ 
+Artist Profile features: 
+            -Most famous social link platform (External Credibility)
+            -Audio Upload: Best Record
+            -Artist name platform
+
+Every profile exists as an ID-like card in this user profile... just on top of the 'Available Events'/'My Events' and 'Booking Requests' under each card
+This card is generated as a template to fill in the necessary info... the info is complete if : Social Media Link, Artist Stage Name, Best Song have been filled in
+The "id" card is embedded with SK EVENTS branding..blending seamlessly with the current theme, WHICH I LOVE! 
+
+
+
+Artist Action:
+
+        There is ONLY ONE important action for each profile. 
+        The artist can only request an organiser to 'Book Me'
+
+        HOWEVER...
+
+        The artist must still see that his/her request is in.
+        <request status>
+
+        HOW?
+
+        The artist profile must reflect the booking: PENDING, ACCEPTED or DECLINED.
+        The business model with the partners..."rather leave a declined artist pending, they only have ONE chance to hit Book Me."
+
+
+Event Organiser Action:
+
+         There is ONLY ONE important action for each profile.
+         The organiser can only respond to a 'Book Me': ACCEPT, DECLINE or WAIT/IGNORE (PENDING)
+
+Organiser Profile features:
+
+        -A notice board..a frame so to speak..to host the image of Event
+        -Most famous social link platform (External Credibility)
+        -image will be posted as part od the event announcenment on the 'Available events'...however, as a small metadata contribution to the format of announcement.
+        The current announcement format is amazing, lets stick with it.
+
+
+IMPORTANT FEATURE:
+
+        Once logged in ... the log in button should become a log out...python logic of javascript?

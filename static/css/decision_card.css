@@ -1,0 +1,173 @@
+/* ========== DECISION CARD WRAPPER ========== */
+.decision-card {
+    max-width: 420px;
+    margin: 2rem auto;
+    background: #0f0f14;
+    color: #f5f5f7;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.45);
+    border: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+}
+
+/* subtle top accent */
+.decision-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(90deg, #7f5af0, #2cb67d);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+.artist-identity {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.artist-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    background: #1a1a22;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.artist-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.artist-meta h2 {
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.artist-meta span {
+    font-size: 0.85rem;
+    color: #a1a1aa;
+}
+
+
+.audio-preview {
+    margin: 1rem 0;
+    background: #16161d;
+    padding: 0.75rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.audio-preview audio {
+    width: 100%;
+}
+
+
+.artist-stats {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+    font-size: 0.85rem;
+}
+
+.artist-stats div {
+    text-align: center;
+    flex: 1;
+}
+
+.artist-stats strong {
+    display: block;
+    font-size: 1rem;
+    color: #ffffff;
+}
+
+
+.decision-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+}
+
+.decision-actions form {
+    flex: 1;
+}
+
+/* Accept */
+.btn-accept {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, #2cb67d, #22c55e);
+    color: #06281b;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* decline */
+.btn-decline {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 12px;
+    border: none;
+    background: #1f1f28;
+    color: #f87171;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid rgba(248,113,113,0.3);
+}
+
+.btn-accept:hover,
+.btn-decline:hover {
+    transform: translateY(-1px);
+}
+
+
+.status-badge {
+    display: inline-block;
+    padding: 0.4rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 0.75rem;
+}
+
+.status-pending {
+    background: rgba(234,179,8,0.15);
+    color: #eab308;
+}
+
+.status-accepted {
+    background: rgba(34,197,94,0.15);
+    color: #22c55e;
+}
+
+.status-declined {
+    background: rgba(239,68,68,0.15);
+    color: #ef4444;
+}
+
+.status.declined {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+
+@media (max-width: 480px) {
+    .decision-card {
+        margin: 1rem;
+        padding: 1.25rem;
+    }
+
+    .artist-stats {
+        gap: 0.5rem;
+    }
+}

@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Organiser Dashboard</h2>
+<p class="subtle">Managing {{ stats.events }} events</p>
+
+<hr>
+
+<!-- PRESSURE -->
+<h3>Pending booking requests</h3>
+
+{% if pending_requests %}
+<ul>
+{% for booking in pending_requests %}
+    <li>
+        <strong>{{ booking.artist.stage_name }}</strong>
+        → {{ booking.event.title }}
+
+        <a class="btn small" href="{% url 'organiser-events' %}">
+            Review
+        </a>
+    </li>
+{% endfor %}
+</ul>
+{% else %}
+<p>No pending requests. Your events are clear.</p>
+{% endif %}
+
+<hr>
+
+<!-- CONTROL -->
+<h3>Actions</h3>
+<a class="btn" href="{% url 'event-create' %}">Create Event</a>
+<a class="btn secondary" href="{% url 'organiser-events' %}">Manage Events</a>
+
+{% endblock %}

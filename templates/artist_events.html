@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% load dict_filters %}
+{% block content %}
+
+<h2>Available Events</h2>
+
+<ul class="event-list">
+    {% for event in events %}
+        <li class="event-card">
+            <div class="event-info">
+                <h3>{{ event.title }}</h3>
+                <p>
+                    Organiser: {{ event.organiser.user.email }}
+                </p>
+            </div>
+
+            <div class="event-action">
+                {% if booking_status|dictkey:event.id %}
+                    
+                    {% if booking_status|dictkey:event.id == "PENDING" %}
+                        <span class="badge badge-pending">
+                            ⏳ Booking Request Sent
+                        </span>
+
+                    {% elif booking_status|dictkey:event.id == "ACCEPTED" %}
+                        <span class="badge badge-accepted">
+                            ✅ Accepted
+                        </span>
+
+                    {% elif booking_status|dictkey:event.id == "DECLINED" %}
+                        <span class="badge badge-declined">
+                            ❌ Declined
+                        </span>
+                    {% endif %}
+
+                {% else %}
+                    <form method="post" action="{% url 'book-event' event.id %}">
+                        {% csrf_token %}
+                        <button class="btn btn-primary" type="submit">
+                            Book Me
+                        </button>
+                    </form>
+                {% endif %}
+            </div>
+        </li>
+    {% empty %}
+        <li>No events available.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

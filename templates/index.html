@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<section class="hero fade-in">
+    <h1>Welcome to the home of <b>SK EVENTS (NPC). </b> </h1>
+     <div class="divider"></div>
+    <h4>
+        <p style="max-width: 460px; margin: 0 auto; font-weight: 520;">SK Events (NPC) is a community-based organisation that exists to ensure that public-facing programmes and events are well-coordinated and youth-inclusive.</p>
+        <p></p>
+        <p style="max-width: 540px; margin: 0 auto; font-weight: 400;"> 
+         We are consciously contributing our part in the National Development initiative through participation in Local Youth Development and co-ordination of the Local Creative-Economy. Our mandate also caters to civic, and institutional initiatives that bring communities together. <p></p>
+         <p style="max-width: 460px; margin: 0 auto; font-weight: 520;"> We are confident in our flagship programmes and supporting coordination-tech systems curated for event-organisers, artists and institutions. </p>
+         <p style="color: rgb(176, 168, 183);"> Company Reg No: 2026/080004/08 </p> 
+
+    <div class="divider"></div>
+
+    <p><i>Are you a programme coordinator or creative artist looking to out-source reliable support-services?</i></p>
+
+    <div class="actions">
+        <a class="btn" href="{% url 'register' %}">Register</a>
+        <a class="btn" href="{% url 'login' %}">Login</a>
+    </div>
+</section>
+
+<section class="sponsor-belt fade-in-delay">
+    <p class="sponsor-title">Supported by local partners</p>
+    <div class="sponsors">
+        <span>Makhuduthamaga Municipality</span>
+        <span>ZAI OAT Hotel</span>
+        <span>Boeketlong Lodge & Pub</span>
+        <span>TT Lifestyle</span>
+        <span>Poetab Records</span>
+        <span>Hunadi Communications</span>
+        <span>Pleasure Tsa Manyalo</span>
+        <span>SK-FM</span>
+        <span>BUILD-IT</span>
+    </div>
+</section>
+<p></p>
+
+<p>...</p>
+{% endblock %}

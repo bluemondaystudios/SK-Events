@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block title %}Organiser Events & Bookings{% endblock %}
+{% block content %}
+<h2>Your Events & Booking Requests</h2>
+
+{% for event in events %}
+    <div style="margin-bottom: 1.5rem;">
+        <h3>{{ event.title }}</h3>
+
+        <ul>
+        {% for booking in bookings %}
+            {% if booking.event.id == event.id %}
+                <li>
+                    {{ booking.artist.stage_name }}
+                    <!-- View Artist link -->
+                    <a href="{% url 'artist-review' booking.artist.id %}">
+                        View Artist
+                    </a>  
+                    
+                    <span class="status-badge status-{{ booking.status|lower }}">
+                        {{ booking.status }}
+                    </span>
+
+
+                    {% if booking.status == "PENDING" %}
+                        <form method="post" action="{% url 'handle-booking' booking.id %}">
+                            {% csrf_token %}
+                            <button name="action" value="accept">Accept</button>
+                            <button name="action" value="decline">Decline</button>
+                        </form>
+                    {% endif %}
+                </li>
+            {% endif %}
+        {% empty %}
+            <li>No booking requests yet.</li>
+        {% endfor %}
+        </ul>
+    </div>
+{% empty %}
+    <p>You have not created any events yet.</p>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% load dict_filters %}
+
+{% block title %}Artist Profile{% endblock %}
+
+{% block content %}
+
+<h2>{{ user.email }} — Artist Profile</h2>
+
+<!-- ARTIST ID CARD -->
+<section class="card">
+    <h3>Artist ID</h3>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label>Stage Name</label><br>
+        {{ form.stage_name }}<br><br>
+
+        <label>Social Link</label><br>
+        {{ form.social_link }}<br><br>
+
+        <label>Best Record (1 upload)</label><br>
+        {{ form.audio }}<br><br>
+
+        <button class="btn" type="submit">Save Profile</button>
+    </form>
+</section>
+
+<hr>
+
+<!-- AVAILABLE EVENTS -->
+<h3>Available Events</h3>
+<ul>
+{% for event in events %}
+    <li>
+        {{ event.title }} - {{ event.organiser.user.email }}
+
+        {% if booking_status|dictkey:event.id %}
+        
+        {% with status=booking_status|dictkey:event.id %}
+            {% if status %}
+                <span class="status-badge status-{{ status|lower }}">
+                    {{ status }}
+                </span>
+                {% endif %}
+            {% endwith %}
+
+
+        {% endif %}
+
+        <form method="post" action="{% url 'book-event' event.id %}">
+            {% csrf_token %}
+            <button class="btn" type="submit">Book Me</button>
+        </form>
+
+    </li>
+{% empty %}
+    <li>No events available.</li>
+{% endfor %}
+</ul>
+
+
+{% endblock %}

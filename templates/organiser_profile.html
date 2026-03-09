@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% load booking_tags %}
+
+{% block title %}Organiser Profile{% endblock %}
+
+{% block content %}
+<h2>{{ organiser.user.email }}</h2>
+
+<hr>
+
+<h3>My Events</h3>
+
+{% for event in events %}
+    <div class="card">
+        <h4>{{ event.title }}</h4>
+
+        {% if event.image %}
+            <img src="{{ event.image.url }}" style="max-width:250px;">
+        {% endif %}
+
+        <h5>Booking Requests</h5>
+
+        <ul>
+        {% for booking in bookings %}
+            {% if booking.event.id == event.id %}
+                <li>
+                    {{ booking.artist.stage_name }}
+
+                    <strong>
+                        ({{ booking_status|dictkey:booking.id }})
+                    </strong>
+                    
+
+
+                    {% if booking.status == "PENDING" %}
+                        <form method="post" action="{% url 'handle-booking' booking.id %}">
+                            {% csrf_token %}
+                            <button name="action" value="accept" class="btn">Accept</button>
+                            <button name="action" value="decline" class="btn">Decline</button>
+                        </form>
+                    {% endif %}
+                </li>
+            {% endif %}
+        {% empty %}
+            <li>No booking requests yet.</li>
+        {% endfor %}
+        </ul>
+    </div>
+{% empty %}
+    <p>No events created yet.</p>
+{% endfor %}
+
+<p>...</p>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Artist Dashboard</h2>
+<p class="subtle">You're logged in as <strong>{{ artist.stage_name }}</strong></p>
+
+<hr>
+
+<!-- POSITION -->
+<h3>Your current position</h3>
+<ul class="stats">
+    <li>Pending requests: <strong>{{ stats.pending }}</strong></li>
+    <li>Accepted bookings: <strong>{{ stats.accepted }}</strong></li>
+    <li>Declined requests: <strong>{{ stats.declined }}</strong></li>
+</ul>
+
+<hr>
+
+<!-- MOMENTUM -->
+<h3>Recent activity</h3>
+<ul>
+{% for booking in recent_activity %}
+    <li>
+        {{ booking.event.title }}
+        —
+        <span class="status {{ booking.status|lower }}">
+            {{ booking.status }}
+        </span>
+    </li>
+{% empty %}
+    <li>No booking activity yet. Time to make moves.</li>
+{% endfor %}
+</ul>
+
+<hr>
+
+<!-- LEVERS -->
+<h3>Next actions</h3>
+
+<a class="btn" href="/profile/artist/events/">Browse Events</a>
+<a class="btn secondary" href="{% url 'artist-profile' %}">Update Profile</a>
+
+
+<p></p>
+
+
+{% endblock %}
