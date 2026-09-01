@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Django
+*.log
+local_settings.py
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Editor/OS
+.DS_Store
+.vscode/
+.idea/
