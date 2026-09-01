@@ -367,3 +367,132 @@ footer {
     list-style: none;
     margin-bottom: 6px;
 }
+
+/* ==========================================================================
+   Decision card — one artist, one event, one decision. The organiser's
+   primary review screen (see organiser_decisions).
+   ========================================================================== */
+.decision-card {
+    max-width: 420px;
+    margin: 1rem auto 2rem auto;
+    background: var(--paper);
+    color: var(--ink);
+    border: 1.5px solid var(--ink);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: left;
+}
+
+.artist-identity {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.artist-avatar {
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.artist-meta h2 {
+    font-size: 1.1rem;
+    margin: 0 0 2px 0;
+    font-weight: 700;
+}
+
+.artist-meta span {
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+.audio-preview {
+    margin: 1rem 0;
+    background: var(--paper-dim);
+    padding: 0.75rem;
+    border-radius: 12px;
+    border: 1px solid var(--line-soft);
+}
+
+.audio-preview audio {
+    width: 100%;
+}
+
+.artist-stats {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+    font-size: 0.85rem;
+}
+
+.artist-stats div {
+    text-align: center;
+    flex: 1;
+}
+
+.artist-stats strong {
+    display: block;
+    font-size: 1.2rem;
+}
+
+.event-context {
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--line-soft);
+}
+
+.decision-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+}
+
+.decision-actions form {
+    flex: 1;
+    margin: 0;
+}
+
+.btn-accept,
+.btn-decline {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.btn-accept {
+    border: 1.5px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+}
+
+.btn-accept:hover {
+    background: var(--ink-soft);
+}
+
+.btn-decline {
+    border: 1.5px solid var(--ink);
+    background: var(--paper);
+    color: var(--ink);
+}
+
+.btn-decline:hover {
+    background: var(--paper-dim);
+}
+
+@media (max-width: 480px) {
+    .decision-card {
+        margin: 1rem;
+        padding: 1.25rem;
+    }
+}

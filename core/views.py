@@ -181,20 +181,6 @@ def book_event(request, event_id):
 
     return redirect("artist-events")
 
-@login_required
-def booking_action(request, booking_id):
-    booking = get_object_or_404(BookingRequest, id=booking_id)
-    if booking.event.organiser.user != request.user:
-        return redirect('home')
-    if request.method == 'POST':
-        action = request.POST.get('action')
-        if action in ['ACCEPTED', 'DECLINED']:
-            booking.status = action
-            booking.save()
-    return redirect('organiser-profile')
-
-
-
 def public_events(request):
     events = Event.objects.all()
     return render(request, "events.html", {"events": events})
@@ -323,22 +309,32 @@ def artist_review(request, artist_id):
 
 @login_required
 def organiser_decisions(request):
-    organiser = request.user.organiser
+    if request.user.role != "ORGANISER":
+        return redirect("home")
 
-    booking = (
+    organiser = request.user.organiserprofile
+
+    pending = (
         BookingRequest.objects
-        .filter(
-            event__organiser=organiser,
-            status="PENDING"
-        )
+        .filter(event__organiser=organiser, status="PENDING")
         .select_related("artist", "event")
         .order_by("created_at")
-        .first()
     )
+    booking = pending.first()
+
+    accepted_count = None
+    if booking:
+        accepted_count = BookingRequest.objects.filter(
+            artist=booking.artist, status="ACCEPTED"
+        ).count()
 
     return render(
         request,
         "profile/organiser/decision_card.html",
-        {"booking": booking}
+        {
+            "booking": booking,
+            "accepted_count": accepted_count,
+            "queue_remaining": pending.count(),
+        }
     )
 

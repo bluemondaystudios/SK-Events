@@ -15,13 +15,10 @@
     <li>
         <strong>{{ booking.artist.stage_name }}</strong>
         → {{ booking.event.title }}
-
-        <a class="btn small" href="{% url 'organiser-events' %}">
-            Review
-        </a>
     </li>
 {% endfor %}
 </ul>
+<a class="btn" href="{% url 'organiser-decisions' %}">Review Requests</a>
 {% else %}
 <p>No pending requests. Your events are clear.</p>
 {% endif %}

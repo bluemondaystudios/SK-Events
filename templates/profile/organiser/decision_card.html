@@ -1,45 +1,59 @@
 {% extends "layout.html" %}
-{% block title %}Decision Card{% endblock %}
+{% block title %}Booking Decisions{% endblock %}
 {% block content %}
 
-<div class="decision-wrapper">
-  {% if booking %}
+<h2>Booking Decisions</h2>
+
+{% if booking %}
+    <p class="subtle">
+        {{ queue_remaining }} pending request{{ queue_remaining|pluralize }} waiting on you.
+    </p>
+
     <div class="decision-card">
 
-      <!-- Identity -->
-      <div class="artist-header">
-        <img src="{{ booking.artist.profile_image.url }}" alt="">
-        <h2>{{ booking.artist.stage_name }}</h2>
-      </div>
+        <div class="artist-identity">
+            <div class="artist-avatar">{{ booking.artist.stage_name|slice:":1"|upper }}</div>
+            <div class="artist-meta">
+                <h2>{{ booking.artist.stage_name|default:booking.artist.user.email }}</h2>
+                {% if booking.artist.social_link %}
+                    <span><a href="{{ booking.artist.social_link }}" target="_blank" rel="noopener">{{ booking.artist.social_link }}</a></span>
+                {% endif %}
+            </div>
+        </div>
 
-      <!-- Proof -->
-      <div class="artist-proof">
-        <audio controls>
-          <source src="{{ booking.artist.sample_audio.url }}" type="audio/mpeg">
-        </audio>
-      </div>
+        {% if booking.artist.audio %}
+            <div class="audio-preview">
+                <audio controls>
+                    <source src="{{ booking.artist.audio.url }}">
+                </audio>
+            </div>
+        {% endif %}
 
-      <!-- Signal -->
-      <div class="artist-stats">
-        <span>{{ booking.artist.booking_requests.filter(status="ACCEPTED").count }} accepted bookings</span>
-      </div>
+        <div class="artist-stats">
+            <div>
+                <strong>{{ accepted_count }}</strong>
+                accepted booking{{ accepted_count|pluralize }}
+            </div>
+        </div>
 
-      <!-- Context -->
-      <div class="event-context">
-        <strong>Event:</strong> {{ booking.event.title }}
-      </div>
+        <div class="event-context">
+            <strong>Event:</strong> {{ booking.event.title }}
+        </div>
 
-      <!-- Decision -->
-      <form method="post" action="{% url 'handle-booking' booking.id %}">
-        {% csrf_token %}
-        <button name="action" value="accept" class="btn accept">Accept</button>
-        <button name="action" value="decline" class="btn decline">Decline</button>
-      </form>
+        <div class="decision-actions">
+            <form method="post" action="{% url 'handle-booking' booking.id %}">
+                {% csrf_token %}
+                <button name="action" value="accept" class="btn-accept">Accept</button>
+            </form>
+            <form method="post" action="{% url 'handle-booking' booking.id %}">
+                {% csrf_token %}
+                <button name="action" value="decline" class="btn-decline">Decline</button>
+            </form>
+        </div>
 
     </div>
-  {% else %}
-    <p>No booking requests awaiting decision.</p>
-  {% endif %}
-</div>
+{% else %}
+    <p>No booking requests awaiting decision. You're caught up.</p>
+{% endif %}
 
 {% endblock %}

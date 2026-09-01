@@ -31,14 +31,10 @@ urlpatterns = [
 
     path("profile/organiser/home/", views.organiser_home, name="organiser-home"),
     path("profile/organiser/events/", views.organiser_events, name="organiser-events"),
-
-
-    
+    path("profile/organiser/decisions/", views.organiser_decisions, name="organiser-decisions"),
 
 
 
-    # core/urls.py
-    path("events/", views.public_events, name="public-events"),
     path("events/<int:event_id>/book/", views.book_event, name="book-event"),
 
 
