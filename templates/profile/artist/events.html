@@ -4,43 +4,48 @@
 
 <h2>Available Events</h2>
 
-<ul class="event-list">
+<div class="events-list">
     {% for event in events %}
-        <li class="event-card">
-            <div class="event-info">
+        <div class="event-card">
+
+            {% if event.image %}
+                <img src="{{ event.image.url }}" alt="{{ event.title }}" class="event-image">
+            {% endif %}
+
+            <div class="event-body">
                 <h3>{{ event.title }}</h3>
-                <p>
+                <p class="muted">
                     Organiser: {{ event.organiser.user.email }}
                 </p>
-            </div>
 
-            <div class="event-action">
-                {% if booking_status|dictkey:event.id %}
-                    {% with display_status=booking_status|dictkey:event.id|artist_facing_status %}
-                        {% if display_status == "PENDING" %}
-                            <span class="badge badge-pending">
-                                ⏳ Booking Request Sent
-                            </span>
-                        {% elif display_status == "ACCEPTED" %}
-                            <span class="badge badge-accepted">
-                                ✅ Accepted
-                            </span>
-                        {% endif %}
-                    {% endwith %}
+                <div class="event-actions">
+                    {% if booking_status|dictkey:event.id %}
+                        {% with display_status=booking_status|dictkey:event.id|artist_facing_status %}
+                            {% if display_status == "PENDING" %}
+                                <span class="badge badge-pending">
+                                    ⏳ Booking Request Sent
+                                </span>
+                            {% elif display_status == "ACCEPTED" %}
+                                <span class="badge badge-accepted">
+                                    ✅ Accepted
+                                </span>
+                            {% endif %}
+                        {% endwith %}
 
-                {% else %}
-                    <form method="post" action="{% url 'book-event' event.id %}">
-                        {% csrf_token %}
-                        <button class="btn btn-primary" type="submit">
-                            Book Me
-                        </button>
-                    </form>
-                {% endif %}
+                    {% else %}
+                        <form method="post" action="{% url 'book-event' event.id %}">
+                            {% csrf_token %}
+                            <button class="btn" type="submit">
+                                Book Me
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
             </div>
-        </li>
+        </div>
     {% empty %}
-        <li>No events available.</li>
+        <p>No events available.</p>
     {% endfor %}
-</ul>
+</div>
 
 {% endblock %}

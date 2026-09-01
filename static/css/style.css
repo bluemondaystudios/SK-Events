@@ -288,29 +288,35 @@ footer {
     border-bottom: 1px solid var(--line-soft);
 }
 
-/* Events */
-.events {
+/* Events — a responsive card grid. One column on narrow screens (where a
+   side-by-side image+text row just clips), more columns as there's room. */
+.events-list {
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
+    text-align: left;
 }
 
-.event-list {
-    list-style: none;
-    padding: 0;
+@media (min-width: 640px) {
+    .events-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 980px) {
+    .events-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 .event-card {
     transition: transform 0.15s ease, box-shadow 0.15s ease;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    margin-bottom: 1rem;
+    flex-direction: column;
     border-radius: var(--radius);
     background: var(--paper);
     border: 1.5px solid var(--ink);
-    text-align: left;
+    overflow: hidden;
 }
 
 .event-card:hover {
@@ -318,12 +324,31 @@ footer {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
 }
 
+/* Event flyers vary wildly in aspect ratio -- crop to a consistent shape
+   so cards in the same row line up instead of jumping in height. */
+.event-card .event-image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    box-sizing: border-box;
+    margin: 0;
+}
+
 .event-body {
     padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .event-body h3 {
     margin: 0 0 6px 0;
+}
+
+.event-actions,
+.event-action {
+    margin-top: auto;
+    padding-top: 10px;
 }
 
 /* ==========================================================================

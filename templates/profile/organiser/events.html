@@ -4,31 +4,31 @@
 <h2>Your Events & Booking Requests</h2>
 
 {% for event in events %}
-    <div style="margin-bottom: 1.5rem;">
+    <div class="card">
         <h3>{{ event.title }}</h3>
 
         <ul>
         {% for booking in bookings %}
             {% if booking.event.id == event.id %}
                 <li>
-                    {{ booking.artist.stage_name }}
-                    <!-- View Artist link -->
-                    <a href="{% url 'artist-review' booking.artist.id %}">
-                        [View Artist]
-                    </a>  
-                    
+                    <strong>{{ booking.artist.stage_name }}</strong>
                     <span class="status-badge status-{{ booking.status|lower }}">
                         {{ booking.status }}
                     </span>
 
+                    <div class="event-actions">
+                        <a class="btn secondary small" href="{% url 'artist-review' booking.artist.id %}">
+                            View Artist
+                        </a>
 
-                    {% if booking.status == "PENDING" %}
-                        <form method="post" action="{% url 'handle-booking' booking.id %}">
-                            {% csrf_token %}
-                            <button name="action" value="accept">Accept</button>
-                            <button name="action" value="decline">Decline</button>
-                        </form>
-                    {% endif %}
+                        {% if booking.status == "PENDING" %}
+                            <form method="post" action="{% url 'handle-booking' booking.id %}">
+                                {% csrf_token %}
+                                <button name="action" value="accept" class="btn small">Accept</button>
+                                <button name="action" value="decline" class="btn secondary small">Decline</button>
+                            </form>
+                        {% endif %}
+                    </div>
                 </li>
             {% endif %}
         {% empty %}

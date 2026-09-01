@@ -9,53 +9,53 @@
         {% for event in events %}
             <div class="event-card">
 
-                
-
                 {% if event.image %}
                     <img src="{{ event.image.url }}" alt="{{ event.title }}" class="event-image">
                 {% endif %}
 
-                <h3>{{ event.title }}</h3>
+                <div class="event-body">
+                    <h3>{{ event.title }}</h3>
 
-                <p>
-                    <strong>Organiser:</strong>
-                    {{ event.organiser.user}}
-                </p>
+                    <p class="muted">
+                        <strong>Organiser:</strong>
+                        {{ event.organiser.user}}
+                    </p>
 
-                <p>
-                    <strong>Created:</strong>
-                    {{ event.created_at|date:"M d, Y" }}
-                </p>
+                    <p class="muted">
+                        <strong>Created:</strong>
+                        {{ event.created_at|date:"M d, Y" }}
+                    </p>
 
-                <div class="event-actions">
+                    <div class="event-actions">
 
-                    {# ---------------- PUBLIC USER ---------------- #}
-                    {% if not user.is_authenticated %}
-                        <a href="{% url 'login' %}?next={% url 'public-events' %}" class="btn">
-                            Log in to request booking
-                        </a>
+                        {# ---------------- PUBLIC USER ---------------- #}
+                        {% if not user.is_authenticated %}
+                            <a href="{% url 'login' %}?next={% url 'public-events' %}" class="btn">
+                                Log in to request booking
+                            </a>
 
-                    {# ---------------- AUTHENTICATED ---------------- #}
-                    {% else %}
+                        {# ---------------- AUTHENTICATED ---------------- #}
+                        {% else %}
 
-                        {# -------- ARTIST -------- #}
-                        {% if user.role == "ARTIST" %}
-                            <form method="post" action="{% url 'book-event' event.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn">
-                                    Request Booking
-                                </button>
-                            </form>
+                            {# -------- ARTIST -------- #}
+                            {% if user.role == "ARTIST" %}
+                                <form method="post" action="{% url 'book-event' event.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn">
+                                        Request Booking
+                                    </button>
+                                </form>
 
-                        {# -------- ORGANISER -------- #}
-                        {% elif user.role == "ORGANISER" %}
-                            <span class="muted">
-                                You are the organiser
-                            </span>
+                            {# -------- ORGANISER -------- #}
+                            {% elif user.role == "ORGANISER" %}
+                                <span class="muted">
+                                    You are the organiser
+                                </span>
+                            {% endif %}
+
                         {% endif %}
 
-                    {% endif %}
-
+                    </div>
                 </div>
             </div>
         {% endfor %}
