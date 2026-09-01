@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +26,15 @@ SECRET_KEY = 'django-insecure-t*nra-d=@k#=j^xz7ibsy0a^09ai+mhgku&u+_ws@%c^o-!f5^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["sk-events-production.up.railway.app"]
+# Always allow local dev + the Railway deployment. Extra hosts can be added
+# via the DJANGO_ALLOWED_HOSTS env var (comma-separated) without touching code,
+# e.g. DJANGO_ALLOWED_HOSTS="mydomain.com,www.mydomain.com"
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "sk-events-production.up.railway.app"]
+ALLOWED_HOSTS += [
+    host.strip()
+    for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",")
+    if host.strip()
+]
 
 
 # Application definition
