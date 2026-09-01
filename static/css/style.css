@@ -1,32 +1,47 @@
+/* ==========================================================================
+   SK EVENTS — design tokens
+   Minimal, black/white, bold. States are told apart by weight/fill, not hue.
+   ========================================================================== */
+:root {
+    --ink: #111111;
+    --ink-soft: #333333;
+    --paper: #ffffff;
+    --paper-dim: #f7f7f7;
+    --line: #dddddd;
+    --line-soft: #eeeeee;
+    --muted: #767676;
+
+    --radius: 6px;
+    --radius-pill: 999px;
+}
+
 /* Global */
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    background: #ffffff;
-    color: #111111;
+    background: var(--paper);
+    color: var(--ink);
     margin: 0;
     padding: 0;
+    padding-bottom: 60px; /* clears the fixed footer */
     text-align: center;
-    font-style:normal ;
-    font-size:medium;
-    
+    font-style: normal;
+    font-size: medium;
 }
 
 a {
-    color: #111;
+    color: var(--ink);
     text-decoration: none;
     margin-bottom: 10px;
 }
 
 h1, h2, h3 {
-    margin: 0 0 10px 0;    
+    margin: 0 0 10px 0;
 }
-
-
 
 /* Header & Navigation */
 header {
-    background: #111;
-    color: #fff;
+    background: var(--ink);
+    color: var(--paper);
     padding: 15px 20px;
     text-align: initial;
     font-size: smaller;
@@ -36,18 +51,19 @@ header h1 {
     display: inline-block;
     margin-bottom: 5px;
     font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
 }
 
 nav {
     display: inline-block;
     float: right;
-    
 }
 
 nav a {
     margin-left: 15px;
-    color: #fff;
-    font-weight: lighter;
+    color: var(--paper);
+    font-weight: 700;
 }
 
 /* Main content */
@@ -59,15 +75,34 @@ main {
 .btn {
     display: inline-block;
     padding: 10px 20px;
-    background: #111;
-    color: #fff;
-    border-radius: 5px;
-    font-weight: bold;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: var(--radius);
+    font-weight: 700;
     margin: 5px 0;
+    cursor: pointer;
+    font-size: 1em;
 }
 
 .btn:hover {
-    background: #333;
+    background: var(--ink-soft);
+    border-color: var(--ink-soft);
+}
+
+/* Secondary: outline, not filled -- for the less-important action next to a primary one */
+.btn.secondary {
+    background: var(--paper);
+    color: var(--ink);
+}
+
+.btn.secondary:hover {
+    background: var(--paper-dim);
+}
+
+.btn.small {
+    padding: 5px 12px;
+    font-size: 0.8em;
 }
 
 /* Forms */
@@ -81,7 +116,7 @@ form input, form select, form textarea {
     width: 100%;
     max-width: 400px;
     box-sizing: border-box;
-    border: 1px solid #ccc;
+    border: 1px solid var(--line);
     border-radius: 4px;
 }
 
@@ -94,20 +129,19 @@ ul {
 ul li {
     margin-bottom: 10px;
     padding: 10px;
-    border: 1px solid #eee;
-    border-radius: 5px;
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius);
 }
 
 /* Footer */
 footer {
     text-align: center;
-    padding: 1px 0;
-    background: #111;
-    color: #fff;
+    padding: 10px 0;
+    background: var(--ink);
+    color: var(--paper);
     position: fixed;
     width: 100%;
     bottom: 0;
-    margin-top: 10px;
 }
 
 /* Hero */
@@ -118,7 +152,7 @@ footer {
 .divider {
     width: 60%;
     margin: 20px auto;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--line);
 }
 
 .actions {
@@ -129,14 +163,15 @@ footer {
 .sponsor-belt {
     margin-top: 60px;
     padding: 20px;
-    background: #f7f7f7;
+    background: var(--paper-dim);
 }
 
 .sponsor-title {
     font-size: 12px;
     letter-spacing: 1px;
+    text-transform: uppercase;
     margin-bottom: 10px;
-    color: #666;
+    color: var(--muted);
 }
 
 .sponsors {
@@ -149,9 +184,10 @@ footer {
 
 .sponsors span {
     padding: 5px 10px;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    background: var(--paper);
+    font-weight: 700;
 }
 
 /* Animations */
@@ -174,7 +210,17 @@ footer {
     }
 }
 
-/* ID cards (artist / organiser) */
+/* Generic card -- ID cards, review cards, anything boxed on white */
+.card {
+    max-width: 500px;
+    margin: 0 auto 30px auto;
+    padding: 20px;
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
+    background: var(--paper);
+    text-align: left;
+}
+
 .id-card-header {
     display: flex;
     align-items: center;
@@ -186,10 +232,10 @@ footer {
    consistent everywhere an event/organiser image is shown. */
 .notice-board {
     display: inline-block;
-    border: 4px solid #111;
+    border: 4px solid var(--ink);
     border-radius: 4px;
     padding: 6px;
-    background: #fff;
+    background: var(--paper);
     margin: 10px 0;
 }
 
@@ -201,41 +247,37 @@ footer {
 
 .event-image {
     display: block;
-    border: 4px solid #111;
+    border: 4px solid var(--ink);
     border-radius: 4px;
     padding: 6px;
-    background: #fff;
+    background: var(--paper);
     width: 220px;
     max-width: 100%;
     margin-bottom: 10px;
 }
 
-/* Profile card */
-.profile-card {
+/* Artist review card (organiser looking at an artist who requested them) */
+.artist-review-card {
     max-width: 500px;
-    margin: 0 auto 30px auto;
+    margin: 0 auto;
     padding: 20px;
-    border: 1px solid #ddd;
+    border: 1.5px solid var(--ink);
     border-radius: 8px;
-    background: #fff;
+    background: var(--paper);
+    text-align: left;
 }
 
-.profile-title {
-    margin-bottom: 10px;
-}
-
-.profile-meta {
-    font-size: 12px;
+.artist-header {
     margin-bottom: 15px;
 }
 
-.audio-block {
-    margin-top: 10px;
+.artist-history ul {
+    padding: 0;
 }
 
-.muted {
-    color: #777;
-    font-size: 12px;
+.muted, .subtle {
+    color: var(--muted);
+    font-size: 0.9em;
 }
 
 /* Sections */
@@ -243,342 +285,85 @@ footer {
     width: 60%;
     margin: 30px auto;
     border: none;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--line-soft);
 }
 
 /* Events */
+.events {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
 .event-list {
     list-style: none;
     padding: 0;
 }
 
-.events {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
+.event-card {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: var(--radius);
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    text-align: left;
 }
 
-
-
-.img {
-  width: 100%;
-  height: 50px;
-  display: block;
+.event-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
 }
 
 .event-body {
-  padding: 16px;
+    padding: 16px;
 }
 
 .event-body h3 {
-  margin: 0 0 6px 0;
+    margin: 0 0 6px 0;
 }
 
-.muted {
-  color: #777;
-  font-size: 0.9rem;
-}
-
-.btn.primary {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 10px 14px;
-  border-radius: 8px;
-  background: #111;
-  color: #fff;
-  text-decoration: none;
-}
-
-.event-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-  background: #c3c3c3;
-  border: 1px solid #222;
-}
-
-
-.event-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-
+/* ==========================================================================
+   Status badges — one component, used everywhere a booking status shows.
+   No traffic-light colors: PENDING is outlined, ACCEPTED is filled solid,
+   DECLINED (organiser view only -- artists never see this label, see
+   core.templatetags.booking_tags.artist_facing_status) is muted.
+   ========================================================================== */
+.status-badge,
 .badge {
-    padding: 0.5rem 0.9rem;
-    border-radius: 999px;
-    font-size: 0.85rem;
-    font-weight: 600;
-}
-
-.badge-pending {
-    background: #2c2c2c;
-    color: #facc15;
-}
-
-.badge-accepted {
-    background: #052e16;
-    color: #4ade80;
-}
-
-.badge-declined {
-    background: #2a0f0f;
-    color: #f87171;
-}
-
-.btn-primary {
-    padding: 0.6rem 1.2rem;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-}
-
-/* STATUS BADGES */
-.status-badge {
     display: inline-block;
-    padding: 0.25rem 0.6rem;
-    border-radius: 999px;
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--radius-pill);
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.04em;
+    border: 1.5px solid var(--ink);
 }
 
-/* STATES */
-.status-pending {
-    background-color: #fef3c7;
-    color: #92400e;
+.status-pending,
+.badge-pending {
+    background: var(--paper);
+    color: var(--ink);
 }
 
-.status-accepted {
-    background-color: #dcfce7;
-    color: #166534;
+.status-accepted,
+.badge-accepted {
+    background: var(--ink);
+    color: var(--paper);
 }
 
-.status-badge.status-declined {
-    background-color: #fee2e2;
-    color: #991b1b;
+.status-declined,
+.badge-declined {
+    background: var(--paper-dim);
+    color: var(--muted);
+    border-color: var(--line);
 }
-
-.status.declined {
-    background-color: #fee2e2;
-    color: #991b1b;
-}
-
-
 
 .stats li {
     list-style: none;
     margin-bottom: 6px;
 }
-
-.status.pending { background-color: #fef3c7;
-                  color: #92400e;
-                  display: inline-block;
-                  padding: 0.25rem 0.6rem;
-                  border-radius: 999px;
-                  font-size: 0.75rem;
-                  font-weight: 600;
-                  text-transform: uppercase;
-                  letter-spacing: 0.03em;
- }
-.status.accepted { background-color: #dcfce7;
-                   color: #166534;
-                   display: inline-block;
-                   padding: 0.25rem 0.6rem;
-                   border-radius: 999px;
-                   font-size: 0.75rem;
-                   font-weight: 600;
-                   text-transform: uppercase;
-                   letter-spacing: 0.03em;
- }
-.status.declined { background-color: #fee2e2;
-                   color: #991b1b;
-                   display: inline-block;
-                   padding: 0.25rem 0.6rem;
-                   border-radius: 999px;
-                   font-size: 0.75rem;
-                   font-weight: 600;
-                   text-transform: uppercase;
-                   letter-spacing: 0.03em;
-}
-
-.subtle {
-    color: #777;
-    font-size: 0.9em;
-}
-
-
-/* ========== DECISION CARD WRAPPER ========== */
-.decision-card {
-    max-width: 420px;
-    margin: 2rem auto;
-    background: #0f0f14;
-    color: #f5f5f7;
-    border-radius: 16px;
-    padding: 1.5rem;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.45);
-    border: 1px solid rgba(255,255,255,0.06);
-    position: relative;
-}
-
-/* subtle top accent */
-.decision-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 4px;
-    width: 100%;
-    background: linear-gradient(90deg, #7f5af0, #2cb67d);
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
-}
-
-
-.artist-identity {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-}
-
-.artist-avatar {
-    width: 64px;
-    height: 64px;
-    border-radius: 12px;
-    background: #1a1a22;
-    overflow: hidden;
-    flex-shrink: 0;
-}
-
-.artist-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.artist-meta h2 {
-    font-size: 1.1rem;
-    margin: 0;
-    font-weight: 600;
-}
-
-.artist-meta span {
-    font-size: 0.85rem;
-    color: #a1a1aa;
-}
-
-
-.audio-preview {
-    margin: 1rem 0;
-    background: #16161d;
-    padding: 0.75rem;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.05);
-}
-
-.audio-preview audio {
-    width: 100%;
-}
-
-
-.artist-stats {
-    display: flex;
-    justify-content: space-between;
-    margin: 1rem 0;
-    font-size: 0.85rem;
-}
-
-.artist-stats div {
-    text-align: center;
-    flex: 1;
-}
-
-.artist-stats strong {
-    display: block;
-    font-size: 1rem;
-    color: #ffffff;
-}
-
-
-.decision-actions {
-    display: flex;
-    gap: 0.75rem;
-    margin-top: 1.25rem;
-}
-
-.decision-actions form {
-    flex: 1;
-}
-
-/* Accept */
-.btn-accept {
-    width: 100%;
-    padding: 0.75rem;
-    border-radius: 12px;
-    border: none;
-    background: linear-gradient(135deg, #2cb67d, #22c55e);
-    color: #06281b;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-/* Decline */
-.btn-decline {
-    width: 100%;
-    padding: 0.75rem;
-    border-radius: 12px;
-    border: none;
-    background: #1f1f28;
-    color: #f87171;
-    font-weight: 600;
-    cursor: pointer;
-    border: 1px solid rgba(248,113,113,0.3);
-}
-
-.btn-accept:hover,
-.btn-decline:hover {
-    transform: translateY(-1px);
-}
-
-.status-badge {
-    display: inline-block;
-    padding: 0.4rem 0.7rem;
-    border-radius: 999px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    margin-top: 0.75rem;
-}
-
-.status-pending {
-    background: rgba(234,179,8,0.15);
-    color: #eab308;
-}
-
-.status-accepted {
-    background: rgba(34,197,94,0.15);
-    color: #22c55e;
-}
-
-.status-declined {
-    background: rgba(239,68,68,0.15);
-    color: #ef4444;
-}
-
-
-@media (max-width: 480px) {
-    .decision-card {
-        margin: 1rem;
-        padding: 1.25rem;
-    }
-
-    .artist-stats {
-        gap: 0.5rem;
-    }
-}
-
-

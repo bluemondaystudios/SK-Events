@@ -24,7 +24,7 @@
     <li>
         {{ booking.event.title }}
         —
-        <span class="status {{ display_status|lower }}">
+        <span class="status-badge status-{{ display_status|lower }}">
             {{ display_status }}
         </span>
     </li>
@@ -39,7 +39,7 @@
 <!-- LEVERS -->
 <h3>Next actions</h3>
 
-<a class="btn" href="/profile/artist/events/">Browse Events</a>
+<a class="btn" href="{% url 'artist-events' %}">Browse Events</a>
 <a class="btn secondary" href="{% url 'artist-profile' %}">Update Profile</a>
 
 
