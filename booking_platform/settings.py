@@ -21,10 +21,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-t*nra-d=@k#=j^xz7ibsy0a^09ai+mhgku&u+_ws@%c^o-!f5^'
+# Set DJANGO_SECRET_KEY in Railway to a real secret; this fallback keeps
+# things running until that's done, but should not be relied on in prod.
+SECRET_KEY = os.environ.get(
+    "DJANGO_SECRET_KEY",
+    "django-insecure-t*nra-d=@k#=j^xz7ibsy0a^09ai+mhgku&u+_ws@%c^o-!f5^",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Defaults to True (today's behavior) so nothing breaks until Railway sets
+# DJANGO_DEBUG=False explicitly. Do that once the static file pipeline
+# below (whitenoise) has been deployed, so switching this off doesn't also
+# take your CSS down with it.
+DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
 
 # Always allow local dev + the Railway deployment. Extra hosts can be added
 # via the DJANGO_ALLOWED_HOSTS env var (comma-separated) without touching code,
@@ -56,6 +65,7 @@ AUTH_USER_MODEL = 'core.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -135,6 +145,18 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
+# Where `collectstatic` gathers files for whitenoise to serve in production
+# (needed once DEBUG=False, since Django stops serving /static/ itself then).
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
