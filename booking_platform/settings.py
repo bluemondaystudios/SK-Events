@@ -29,11 +29,13 @@ SECRET_KEY = os.environ.get(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# Defaults to True (today's behavior) so nothing breaks until Railway sets
-# DJANGO_DEBUG=False explicitly. Do that once the static file pipeline
-# below (whitenoise) has been deployed, so switching this off doesn't also
-# take your CSS down with it.
-DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
+# Defaults to False. With DEBUG on, any unhandled error -- anywhere on the
+# site, not just login -- shows visitors a full technical traceback:
+# settings, file paths, stack frames. Static files (whitenoise + the
+# Procfile's collectstatic step) and custom 404/500 templates are both in
+# place now, so this is safe to default off. Set DJANGO_DEBUG=True in
+# Railway only temporarily, to debug a live issue.
+DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
 
 # Always allow local dev + the Railway deployment. Extra hosts can be added
 # via the DJANGO_ALLOWED_HOSTS env var (comma-separated) without touching code,

@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block title %}Page Not Found{% endblock %}
+{% block content %}
+
+<section class="card" style="text-align:center;">
+    <h2>Page not found</h2>
+    <p class="muted">That page doesn't exist, or has moved.</p>
+    <p><a class="btn" href="{% url 'home' %}">Back to Home</a></p>
+</section>
+
+{% endblock %}
