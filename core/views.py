@@ -82,47 +82,41 @@ def profile_router(request):
 @login_required
 def artist_profile(request):
     profile = ArtistProfile.objects.get(user=request.user)
-    events = Event.objects.all()
-
-    bookings = Booking.objects.filter(artist=profile)
-
-    booking_status = {
-        booking.event.id: booking.status
-        for booking in bookings
-    }
 
     if request.method == "POST":
         form = ArtistProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
+            profile.refresh_from_db()
     else:
         form = ArtistProfileForm(instance=profile)
+
+    # "Complete" per the ID-card spec: stage name, social link and a best
+    # song all filled in. Drives the completeness indicator on the card.
+    is_complete = bool(profile.stage_name and profile.social_link and profile.audio)
 
     return render(request, "artist_profile.html", {
         "profile": profile,
         "form": form,
-        "events": events,
-        "booking_status": booking_status,  # ✅ ALWAYS present
+        "is_complete": is_complete,
     })
 
 
 @login_required
 def organiser_profile(request):
     organiser = OrganiserProfile.objects.get(user=request.user)
-    events = Event.objects.filter(organiser=organiser)
 
-    bookings = Booking.objects.filter(event__in=events).select_related("artist", "event")
-
-    booking_status = {
-        booking.id: booking.status
-        for booking in bookings
-    }
+    if request.method == "POST":
+        form = OrganiserProfileForm(request.POST, request.FILES, instance=organiser)
+        if form.is_valid():
+            form.save()
+    else:
+        form = OrganiserProfileForm(instance=organiser)
 
     return render(request, "organiser_profile.html", {
         "organiser": organiser,
-        "events": events,
-        "bookings": bookings,
-        "booking_status": booking_status,  # ✅ ALWAYS a dict
+        "form": form,
+        "event_count": Event.objects.filter(organiser=organiser).count(),
     })
 
 
@@ -216,9 +210,11 @@ def artist_home(request):
     bookings = BookingRequest.objects.filter(artist=artist).select_related("event")
 
     stats = {
-        "pending": bookings.filter(status="PENDING").count(),
+        # DECLINED folds into "pending" here -- see artist_facing_status:
+        # artists get one shot at "Book Me" per event either way, and a
+        # declined request is never shown to them as a hard no.
+        "pending": bookings.filter(status__in=["PENDING", "DECLINED"]).count(),
         "accepted": bookings.filter(status="ACCEPTED").count(),
-        "declined": bookings.filter(status="DECLINED").count(),
     }
 
     recent_activity = bookings.order_by("-created_at")[:5]

@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% load booking_tags %}
 {% block content %}
 
 <h2>Artist Dashboard</h2>
@@ -11,7 +12,6 @@
 <ul class="stats">
     <li>Pending requests: <strong>{{ stats.pending }}</strong></li>
     <li>Accepted bookings: <strong>{{ stats.accepted }}</strong></li>
-    <li>Declined requests: <strong>{{ stats.declined }}</strong></li>
 </ul>
 
 <hr>
@@ -20,13 +20,15 @@
 <h3>Recent activity</h3>
 <ul>
 {% for booking in recent_activity %}
+    {% with display_status=booking.status|artist_facing_status %}
     <li>
         {{ booking.event.title }}
         —
-        <span class="status {{ booking.status|lower }}">
-            {{ booking.status }}
+        <span class="status {{ display_status|lower }}">
+            {{ display_status }}
         </span>
     </li>
+    {% endwith %}
 {% empty %}
     <li>No booking activity yet. Time to make moves.</li>
 {% endfor %}

@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% load dict_filters %}
+{% load dict_filters booking_tags %}
 {% block content %}
 
 <h2>Available Events</h2>
@@ -16,22 +16,17 @@
 
             <div class="event-action">
                 {% if booking_status|dictkey:event.id %}
-                    
-                    {% if booking_status|dictkey:event.id == "PENDING" %}
-                        <span class="badge badge-pending">
-                            ⏳ Booking Request Sent
-                        </span>
-
-                    {% elif booking_status|dictkey:event.id == "ACCEPTED" %}
-                        <span class="badge badge-accepted">
-                            ✅ Accepted
-                        </span>
-
-                    {% elif booking_status|dictkey:event.id == "DECLINED" %}
-                        <span class="badge badge-declined">
-                            ❌ Declined
-                        </span>
-                    {% endif %}
+                    {% with display_status=booking_status|dictkey:event.id|artist_facing_status %}
+                        {% if display_status == "PENDING" %}
+                            <span class="badge badge-pending">
+                                ⏳ Booking Request Sent
+                            </span>
+                        {% elif display_status == "ACCEPTED" %}
+                            <span class="badge badge-accepted">
+                                ✅ Accepted
+                            </span>
+                        {% endif %}
+                    {% endwith %}
 
                 {% else %}
                     <form method="post" action="{% url 'book-event' event.id %}">

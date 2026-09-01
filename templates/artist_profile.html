@@ -1,5 +1,4 @@
 {% extends "layout.html" %}
-{% load dict_filters %}
 
 {% block title %}Artist Profile{% endblock %}
 
@@ -8,8 +7,22 @@
 <h2>{{ user.email }} — Artist Profile</h2>
 
 <!-- ARTIST ID CARD -->
-<section class="card">
-    <h3>Artist ID</h3>
+<section class="card id-card">
+    <div class="id-card-header">
+        <h3>Artist ID</h3>
+        {% if is_complete %}
+            <span class="badge badge-accepted">✅ Complete</span>
+        {% else %}
+            <span class="badge badge-pending">⚠ Incomplete</span>
+        {% endif %}
+    </div>
+
+    {% if not is_complete %}
+        <p class="muted">
+            Fill in your stage name, social link and a best song so organisers
+            see a complete profile.
+        </p>
+    {% endif %}
 
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -29,36 +42,6 @@
 
 <hr>
 
-<!-- AVAILABLE EVENTS -->
-<h3>Available Events</h3>
-<ul>
-{% for event in events %}
-    <li>
-        {{ event.title }} - {{ event.organiser.user.email }}
-
-        {% if booking_status|dictkey:event.id %}
-        
-        {% with status=booking_status|dictkey:event.id %}
-            {% if status %}
-                <span class="status-badge status-{{ status|lower }}">
-                    {{ status }}
-                </span>
-                {% endif %}
-            {% endwith %}
-
-
-        {% endif %}
-
-        <form method="post" action="{% url 'book-event' event.id %}">
-            {% csrf_token %}
-            <button class="btn" type="submit">Book Me</button>
-        </form>
-
-    </li>
-{% empty %}
-    <li>No events available.</li>
-{% endfor %}
-</ul>
-
+<p><a class="btn" href="{% url 'artist-events' %}">Browse Events</a></p>
 
 {% endblock %}
