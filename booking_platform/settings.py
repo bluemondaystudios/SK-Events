@@ -97,13 +97,29 @@ WSGI_APPLICATION = 'booking_platform.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+#
+# Railway's Postgres add-on injects a DATABASE_URL env var -- use it when
+# present. Falls back to the local sqlite3 file otherwise, so local dev
+# doesn't require a Postgres install unless you want one (set DATABASE_URL
+# yourself, e.g. postgres://user:pass@localhost:5432/skevents, to test
+# against Postgres locally).
+import dj_database_url
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if os.environ.get("DATABASE_URL"):
+    DATABASES = {
+        "default": dj_database_url.config(
+            env="DATABASE_URL",
+            conn_max_age=600,
+            ssl_require=os.environ.get("DATABASE_SSL_REQUIRE", "True") == "True",
+        )
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
