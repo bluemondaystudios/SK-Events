@@ -172,17 +172,53 @@ STATICFILES_DIRS = [
 # Where `collectstatic` gathers files for whitenoise to serve in production
 # (needed once DEBUG=False, since Django stops serving /static/ itself then).
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Media (user uploads: event flyers, artist audio, organiser notice-board
+# images) goes to S3-compatible object storage when AWS_STORAGE_BUCKET_NAME
+# is set, falling back to local disk otherwise. This matters because
+# Railway's filesystem for this service is not guaranteed to persist across
+# deploys/restarts -- a file saved to disk today can simply be gone
+# tomorrow. Works with Railway Buckets, or any other S3-compatible provider
+# (Cloudflare R2, Backblaze B2, AWS S3 itself) -- these are the standard
+# django-storages/boto3 variable names, not Railway-specific ones. Create a
+# bucket in Railway, then use Variable References in the app service to map
+# its actual credentials onto these names.
+AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
+
+if AWS_STORAGE_BUCKET_NAME:
+    AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+    AWS_S3_ENDPOINT_URL = os.environ.get("AWS_S3_ENDPOINT_URL")
+    AWS_S3_REGION_NAME = os.environ.get("AWS_S3_REGION_NAME", "auto")
+    # Event flyers, artist audio, etc. are meant to be publicly viewable
+    # (that's the whole point -- artists/visitors see them in the app), so
+    # plain public URLs rather than expiring signed ones.
+    AWS_DEFAULT_ACL = "public-read"
+    AWS_QUERYSTRING_AUTH = False
+    # path-style (bucket-name in the path, not as a subdomain) is the safer
+    # default across S3-compatible providers that aren't AWS itself.
+    AWS_S3_ADDRESSING_STYLE = "path"
+
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.s3.S3Storage",
+        },
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
+    }
+else:
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
+    }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
