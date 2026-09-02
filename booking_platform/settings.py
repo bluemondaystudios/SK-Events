@@ -40,7 +40,13 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
 # Always allow local dev + the Railway deployment. Extra hosts can be added
 # via the DJANGO_ALLOWED_HOSTS env var (comma-separated) without touching code,
 # e.g. DJANGO_ALLOWED_HOSTS="mydomain.com,www.mydomain.com"
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "sk-events-production.up.railway.app"]
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "sk-events-production.up.railway.app",
+    "sk-events.co.za",
+    "www.sk-events.co.za",
+]
 ALLOWED_HOSTS += [
     host.strip()
     for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",")
