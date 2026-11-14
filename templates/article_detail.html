@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block content %}
+
+<article class="article-full">
+    <span class="category-pill">{{ article.get_category_display }}</span>
+    <h1>{{ article.title }}</h1>
+    <p class="byline">
+        {{ article.published_at|date:"F d, Y" }}
+        {% if article.author %} &middot; By {{ article.author.email }}{% endif %}
+        {% if article.artist %}
+            &middot; About <strong>{{ article.artist.stage_name }}</strong>
+            {% if article.artist.social_link %}
+                (<a href="{{ article.artist.social_link }}" target="_blank" rel="noopener">profile</a>)
+            {% endif %}
+        {% endif %}
+    </p>
+
+    {% if article.featured_image %}
+        <div class="notice-board article-hero-image">
+            <img src="{{ article.featured_image.url }}" alt="{{ article.title }}">
+        </div>
+    {% endif %}
+
+    <div class="article-content">
+        {{ article.body|linebreaks }}
+    </div>
+</article>
+
+{% if related %}
+    <h3 class="section-title">More {{ article.get_category_display }}</h3>
+    <div class="articles-grid">
+        {% for article in related %}
+            {% include "_article_card.html" %}
+        {% endfor %}
+    </div>
+{% endif %}
+
+<p><a class="btn secondary" href="{% url 'home' %}">&larr; Back to Home</a></p>
+
+{% endblock %}

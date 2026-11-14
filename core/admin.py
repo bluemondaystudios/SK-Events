@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 
-from .models import User, ArtistProfile, OrganiserProfile, Event, BookingRequest
+from .models import User, ArtistProfile, OrganiserProfile, Event, BookingRequest, Article
 
 
 @admin.register(User)
@@ -40,6 +40,33 @@ class UserAdmin(DjangoUserAdmin):
             },
         ),
     )
+
+
+@admin.register(Article)
+class ArticleAdmin(admin.ModelAdmin):
+    list_display = ["title", "category", "status", "author", "artist", "published_at"]
+    list_filter = ["status", "category"]
+    search_fields = ["title", "body", "excerpt"]
+    prepopulated_fields = {"slug": ("title",)}
+    autocomplete_fields = ["artist"]
+    date_hierarchy = "published_at"
+
+    fieldsets = (
+        (None, {"fields": ("title", "slug", "category", "status")}),
+        ("Content", {"fields": ("excerpt", "body", "featured_image")}),
+        ("Attribution", {"fields": ("author", "artist")}),
+        ("Publishing", {"fields": ("published_at",)}),
+    )
+
+    def get_changeform_initial_data(self, request):
+        return {"author": request.user.pk}
+
+
+# ---------------------------------------------------------------------------
+# Legacy booking platform (retired in favour of the news/journalism site
+# above). Kept registered so existing data stays browsable/exportable here,
+# but nothing in the live site links to any of it any more.
+# ---------------------------------------------------------------------------
 
 
 @admin.register(ArtistProfile)

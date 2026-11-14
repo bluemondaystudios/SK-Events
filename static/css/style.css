@@ -1,6 +1,6 @@
 /* ==========================================================================
    SK EVENTS — design tokens
-   Minimal, black/white, bold. States are told apart by weight/fill, not hue.
+   Minimal, black/white, bold.
    ========================================================================== */
 :root {
     --ink: #111111;
@@ -31,7 +31,6 @@ body {
 a {
     color: var(--ink);
     text-decoration: none;
-    margin-bottom: 10px;
 }
 
 h1, h2, h3 {
@@ -44,31 +43,40 @@ header {
     color: var(--paper);
     padding: 15px 20px;
     text-align: initial;
-    font-size: smaller;
+}
+
+.masthead-link {
+    display: inline-block;
 }
 
 header h1 {
-    display: inline-block;
-    margin-bottom: 5px;
-    font-size: 20px;
+    margin: 0;
+    font-size: 22px;
     font-weight: 700;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.04em;
+    color: var(--paper);
 }
 
-nav {
-    display: inline-block;
-    float: right;
+.masthead-strap {
+    margin: 0 0 8px 0;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
 }
 
 nav a {
-    margin-left: 15px;
+    margin-right: 15px;
     color: var(--paper);
     font-weight: 700;
+    font-size: 0.9em;
 }
 
 /* Main content */
 main {
     padding: 30px 20px;
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
 /* Buttons */
@@ -100,11 +108,6 @@ main {
     background: var(--paper-dim);
 }
 
-.btn.small {
-    padding: 5px 12px;
-    font-size: 0.8em;
-}
-
 /* Forms */
 form {
     margin-top: 20px;
@@ -126,13 +129,6 @@ ul {
     padding: 0;
 }
 
-ul li {
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid var(--line-soft);
-    border-radius: var(--radius);
-}
-
 /* Footer */
 footer {
     text-align: center;
@@ -144,59 +140,9 @@ footer {
     bottom: 0;
 }
 
-/* Hero */
-.hero {
-    margin-top: 40px;
-}
-
-.divider {
-    width: 60%;
-    margin: 20px auto;
-    border-bottom: 1px solid var(--line);
-}
-
-.actions {
-    margin-top: 20px;
-}
-
-/* Sponsor belt */
-.sponsor-belt {
-    margin-top: 60px;
-    padding: 20px;
-    background: var(--paper-dim);
-}
-
-.sponsor-title {
-    font-size: 12px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-    color: var(--muted);
-}
-
-.sponsors {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    font-size: 12px;
-}
-
-.sponsors span {
-    padding: 5px 10px;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-pill);
-    background: var(--paper);
-    font-weight: 700;
-}
-
 /* Animations */
 .fade-in {
     animation: fadeIn 0.8s ease-out;
-}
-
-.fade-in-delay {
-    animation: fadeIn 1.2s ease-out;
 }
 
 @keyframes fadeIn {
@@ -221,15 +167,7 @@ footer {
     text-align: left;
 }
 
-.id-card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-/* Notice board: the branded frame around an organiser's event imagery,
-   consistent everywhere an event/organiser image is shown. */
+/* Notice board: the branded frame around featured/hero imagery. */
 .notice-board {
     display: inline-block;
     border: 4px solid var(--ink);
@@ -242,55 +180,70 @@ footer {
 .notice-board img {
     display: block;
     max-width: 100%;
-    width: 220px;
 }
 
-.event-image {
-    display: block;
-    border: 4px solid var(--ink);
-    border-radius: 4px;
-    padding: 6px;
-    background: var(--paper);
-    width: 220px;
-    max-width: 100%;
-    margin-bottom: 10px;
-}
-
-/* Artist review card (organiser looking at an artist who requested them) */
-.artist-review-card {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1.5px solid var(--ink);
-    border-radius: 8px;
-    background: var(--paper);
-    text-align: left;
-}
-
-.artist-header {
-    margin-bottom: 15px;
-}
-
-.artist-history ul {
-    padding: 0;
-}
-
-.muted, .subtle {
+.muted {
     color: var(--muted);
     font-size: 0.9em;
 }
 
-/* Sections */
-.section-divider {
-    width: 60%;
-    margin: 30px auto;
-    border: none;
-    border-bottom: 1px solid var(--line-soft);
+.section-title {
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.9rem;
+    color: var(--muted);
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 8px;
+    margin: 30px 0 20px 0;
 }
 
-/* Events — a responsive card grid. One column on narrow screens (where a
-   side-by-side image+text row just clips), more columns as there's room. */
-.events-list {
+.category-pill {
+    display: inline-block;
+    padding: 0.25rem 0.7rem;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid var(--ink);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+}
+
+.byline {
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+/* ==========================================================================
+   Articles — the homepage feed, category pages, and the "more like this"
+   strip under an article.
+   ========================================================================== */
+.featured-article {
+    display: block;
+    text-align: left;
+    border: 1.5px solid var(--ink);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.featured-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+}
+
+.featured-body {
+    padding: 20px;
+}
+
+.featured-body h2 {
+    font-size: 1.6rem;
+}
+
+.articles-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
@@ -298,226 +251,82 @@ footer {
 }
 
 @media (min-width: 640px) {
-    .events-list {
+    .articles-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (min-width: 980px) {
-    .events-list {
+    .articles-grid {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
-.event-card {
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+.article-card {
     display: flex;
     flex-direction: column;
     border-radius: var(--radius);
     background: var(--paper);
     border: 1.5px solid var(--ink);
     overflow: hidden;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.event-card:hover {
+.article-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
 }
 
-/* Event flyers vary wildly in aspect ratio -- crop to a consistent shape
-   so cards in the same row line up instead of jumping in height. */
-.event-card .event-image {
+/* Article images vary in aspect ratio -- crop to a consistent shape so
+   cards in the same row line up instead of jumping in height. */
+.article-image {
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
-    box-sizing: border-box;
-    margin: 0;
+    display: block;
 }
 
-.event-body {
+.article-image-placeholder {
+    background: var(--paper-dim);
+}
+
+.article-body {
     padding: 16px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
 }
 
-.event-body h3 {
+.article-body h3 {
+    font-size: 1.1rem;
     margin: 0 0 6px 0;
 }
 
-.event-actions,
-.event-action {
-    margin-top: auto;
-    padding-top: 10px;
-}
-
-/* ==========================================================================
-   Status badges — one component, used everywhere a booking status shows.
-   No traffic-light colors: PENDING is outlined, ACCEPTED is filled solid,
-   DECLINED (organiser view only -- artists never see this label, see
-   core.templatetags.booking_tags.artist_facing_status) is muted.
-   ========================================================================== */
-.status-badge,
-.badge {
-    display: inline-block;
-    padding: 0.3rem 0.75rem;
-    border-radius: var(--radius-pill);
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    border: 1.5px solid var(--ink);
-}
-
-.status-pending,
-.badge-pending {
-    background: var(--paper);
-    color: var(--ink);
-}
-
-.status-accepted,
-.badge-accepted {
-    background: var(--ink);
-    color: var(--paper);
-}
-
-.status-declined,
-.badge-declined {
-    background: var(--paper-dim);
-    color: var(--muted);
-    border-color: var(--line);
-}
-
-.stats li {
-    list-style: none;
-    margin-bottom: 6px;
-}
-
-/* ==========================================================================
-   Decision card — one artist, one event, one decision. The organiser's
-   primary review screen (see organiser_decisions).
-   ========================================================================== */
-.decision-card {
-    max-width: 420px;
-    margin: 1rem auto 2rem auto;
-    background: var(--paper);
-    color: var(--ink);
-    border: 1.5px solid var(--ink);
-    border-radius: 16px;
-    padding: 1.5rem;
+/* Full article page */
+.article-full {
     text-align: left;
+    max-width: 720px;
+    margin: 0 auto;
 }
 
-.artist-identity {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
+.article-full h1 {
+    font-size: 2rem;
+    margin-top: 6px;
 }
 
-.artist-avatar {
-    width: 56px;
-    height: 56px;
-    min-width: 56px;
-    border-radius: 50%;
-    background: var(--ink);
-    color: var(--paper);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    font-weight: 700;
-}
-
-.artist-meta h2 {
-    font-size: 1.1rem;
-    margin: 0 0 2px 0;
-    font-weight: 700;
-}
-
-.artist-meta span {
-    font-size: 0.85rem;
-    color: var(--muted);
-}
-
-.audio-preview {
-    margin: 1rem 0;
-    background: var(--paper-dim);
-    padding: 0.75rem;
-    border-radius: 12px;
-    border: 1px solid var(--line-soft);
-}
-
-.audio-preview audio {
-    width: 100%;
-}
-
-.artist-stats {
-    display: flex;
-    justify-content: space-between;
-    margin: 1rem 0;
-    font-size: 0.85rem;
-}
-
-.artist-stats div {
-    text-align: center;
-    flex: 1;
-}
-
-.artist-stats strong {
+.article-hero-image {
     display: block;
-    font-size: 1.2rem;
+    margin: 20px auto;
+    text-align: center;
 }
 
-.event-context {
-    padding-top: 0.75rem;
-    border-top: 1px solid var(--line-soft);
+.article-hero-image img {
+    max-height: 480px;
 }
 
-.decision-actions {
-    display: flex;
-    gap: 0.75rem;
-    margin-top: 1.25rem;
+.article-content {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-top: 20px;
 }
 
-.decision-actions form {
-    flex: 1;
-    margin: 0;
-}
-
-.btn-accept,
-.btn-decline {
-    width: 100%;
-    padding: 0.75rem;
-    border-radius: 10px;
-    font-weight: 700;
-    cursor: pointer;
-    font-size: 1em;
-}
-
-.btn-accept {
-    border: 1.5px solid var(--ink);
-    background: var(--ink);
-    color: var(--paper);
-}
-
-.btn-accept:hover {
-    background: var(--ink-soft);
-}
-
-.btn-decline {
-    border: 1.5px solid var(--ink);
-    background: var(--paper);
-    color: var(--ink);
-}
-
-.btn-decline:hover {
-    background: var(--paper-dim);
-}
-
-@media (max-width: 480px) {
-    .decision-card {
-        margin: 1rem;
-        padding: 1.25rem;
-    }
+.article-content p {
+    margin: 0 0 1.2em 0;
 }

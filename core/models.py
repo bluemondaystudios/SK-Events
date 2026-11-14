@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
+from django.utils.text import Truncator, slugify
 
 
 class UserManager(BaseUserManager):
@@ -88,3 +90,83 @@ class BookingRequest(models.Model):
 
     def __str__(self):
         return f"{self.artist} → {self.event} ({self.status})"
+
+
+class Article(models.Model):
+    """A news/blog post about Sekhukhune's entertainment scene. Admin/staff
+    write these through the Django admin -- no public authoring flow."""
+
+    CATEGORY_CHOICES = (
+        ("NEWS", "News"),
+        ("INTERVIEW", "Interview"),
+        ("EVENT_RECAP", "Event Recap"),
+        ("RELEASE", "New Release"),
+        ("OPINION", "Opinion"),
+    )
+
+    STATUS_CHOICES = (
+        ("DRAFT", "Draft"),
+        ("PUBLISHED", "Published"),
+    )
+
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=220, unique=True, blank=True)
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default="NEWS")
+    excerpt = models.CharField(
+        max_length=300,
+        blank=True,
+        help_text="Shown in article listings. Leave blank to auto-generate from the body.",
+    )
+    body = models.TextField()
+    featured_image = models.ImageField(upload_to="article_images/", blank=True, null=True)
+
+    author = models.ForeignKey(
+        "User",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        limit_choices_to={"is_staff": True},
+        related_name="articles",
+    )
+    # Optional link to an existing artist profile, e.g. "MC Thunder just
+    # shook the ground at Youth Culture Fest" links straight to their page.
+    artist = models.ForeignKey(
+        ArtistProfile,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="articles",
+    )
+
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="DRAFT")
+    published_at = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-published_at", "-created_at"]
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self._generate_unique_slug()
+
+        if self.status == "PUBLISHED" and not self.published_at:
+            self.published_at = timezone.now()
+
+        super().save(*args, **kwargs)
+
+    def _generate_unique_slug(self):
+        base = slugify(self.title)[:200] or "article"
+        slug = base
+        n = 1
+        while Article.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+            n += 1
+            slug = f"{base}-{n}"
+        return slug
+
+    @property
+    def display_excerpt(self):
+        return self.excerpt or Truncator(self.body).words(40)
