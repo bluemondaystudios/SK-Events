@@ -1,0 +1,40 @@
+title: SK Events
+tagline: Sekhukhune Entertainment News
+description: >-
+  News, interviews, event recaps, new releases and opinion pieces from
+  Sekhukhune's entertainment scene.
+url: "https://sk-events.co.za"
+baseurl: ""
+
+author: SK Events
+
+# Explicitly no theme -- this site has its own layouts/includes/assets.
+# Without this, the github-pages gem defaults to jekyll-theme-primer,
+# which (as of 0.6.0) fails to build at all due to an encoding bug in its
+# own bundled Sass -- unrelated to anything in this repo.
+theme: null
+
+markdown: kramdown
+permalink: /:categories/:title/
+
+paginate: 9
+paginate_path: "/page:num/"
+
+plugins:
+  - jekyll-paginate
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor

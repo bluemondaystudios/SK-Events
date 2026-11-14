@@ -1,0 +1,10 @@
+- slug: news
+  label: News
+- slug: interview
+  label: Interview
+- slug: event-recap
+  label: Event Recap
+- slug: new-release
+  label: New Release
+- slug: opinion
+  label: Opinion

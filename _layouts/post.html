@@ -1,0 +1,38 @@
+---
+layout: default
+---
+<article class="article-full">
+    {% assign cat_slug = page.categories[0] %}
+    {% assign cat = site.data.categories | where: "slug", cat_slug | first %}
+    {% if cat %}<span class="category-pill">{{ cat.label }}</span>{% endif %}
+    <h1>{{ page.title }}</h1>
+    <p class="byline">
+        {{ page.date | date: "%B %d, %Y" }}
+        {% if page.author %} &middot; By {{ page.author }}{% endif %}
+    </p>
+
+    {% if page.image %}
+        <div class="notice-board article-hero-image">
+            <img src="{{ page.image | relative_url }}" alt="{{ page.title }}">
+        </div>
+    {% endif %}
+
+    <div class="article-content">
+        {{ content }}
+    </div>
+</article>
+
+{% assign related = site.categories[cat_slug] %}
+{% if related %}
+    {% assign related = related | where_exp: "p", "p.url != page.url" | sort: "date" | reverse | slice: 0, 3 %}
+{% endif %}
+{% if related.size > 0 %}
+    <h3 class="section-title">More {{ cat.label }}</h3>
+    <div class="articles-grid">
+        {% for post in related %}
+            {% include article-card.html post=post %}
+        {% endfor %}
+    </div>
+{% endif %}
+
+<p><a class="btn secondary" href="{{ '/' | relative_url }}">&larr; Back to Home</a></p>

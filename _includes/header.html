@@ -1,0 +1,12 @@
+<header>
+    <a href="{{ '/' | relative_url }}" class="masthead-link">
+        <h1>{{ site.title }}</h1>
+        <p class="masthead-strap">{{ site.tagline }}</p>
+    </a>
+    <nav>
+        <a href="{{ '/' | relative_url }}">Home</a>
+        {% for cat in site.data.categories %}
+            <a href="{{ '/category/' | append: cat.slug | append: '/' | relative_url }}">{{ cat.label }}</a>
+        {% endfor %}
+    </nav>
+</header>

@@ -1,0 +1,19 @@
+---
+layout: default
+---
+<h2>{{ page.title }}</h2>
+
+{% assign articles = site.categories[page.cat_slug] %}
+{% if articles %}
+    {% assign articles = articles | sort: "date" | reverse %}
+{% endif %}
+
+{% if articles.size > 0 %}
+    <div class="articles-grid">
+        {% for post in articles %}
+            {% include article-card.html post=post %}
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="muted">No articles in this category yet.</p>
+{% endif %}

@@ -1,0 +1,57 @@
+---
+layout: default
+title: Home
+---
+{% if paginator.page == 1 %}
+    {% assign featured = paginator.posts | first %}
+    {% assign rest = paginator.posts | slice: 1, 999 %}
+{% else %}
+    {% assign featured = nil %}
+    {% assign rest = paginator.posts %}
+{% endif %}
+
+{% if featured %}
+    {% assign fcat_slug = featured.categories[0] %}
+    {% assign fcat = site.data.categories | where: "slug", fcat_slug | first %}
+    <section class="featured-article fade-in">
+        <a href="{{ featured.url | relative_url }}">
+            {% if featured.image %}
+                <img src="{{ featured.image | relative_url }}" alt="{{ featured.title }}" class="featured-image">
+            {% else %}
+                <div class="featured-image article-image-placeholder"></div>
+            {% endif %}
+        </a>
+        <div class="featured-body">
+            {% if fcat %}<span class="category-pill">{{ fcat.label }}</span>{% endif %}
+            <h2><a href="{{ featured.url | relative_url }}">{{ featured.title }}</a></h2>
+            <p class="muted">{{ featured.excerpt | strip_html | truncatewords: 30 }}</p>
+            <p class="byline">{{ featured.date | date: "%b %d, %Y" }}</p>
+        </div>
+    </section>
+{% endif %}
+
+{% if rest.size > 0 %}
+    <h3 class="section-title">Latest</h3>
+    <div class="articles-grid">
+        {% for post in rest %}
+            {% include article-card.html post=post %}
+        {% endfor %}
+    </div>
+{% elsif featured == nil %}
+    <section class="card" style="text-align:center;">
+        <h2>Nothing published yet</h2>
+        <p class="muted">Check back soon for the latest from Sekhukhune's entertainment scene.</p>
+    </section>
+{% endif %}
+
+{% if paginator.total_pages > 1 %}
+    <nav class="pagination">
+        {% if paginator.previous_page %}
+            <a href="{{ paginator.previous_page_path | relative_url }}" class="btn secondary">&larr; Newer</a>
+        {% endif %}
+        <span class="muted">Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
+        {% if paginator.next_page %}
+            <a href="{{ paginator.next_page_path | relative_url }}" class="btn secondary">Older &rarr;</a>
+        {% endif %}
+    </nav>
+{% endif %}

@@ -1,0 +1,24 @@
+{% assign post = include.post %}
+{% assign cat_slug = post.categories[0] %}
+{% assign cat = site.data.categories | where: "slug", cat_slug | first %}
+<article class="article-card">
+    <a href="{{ post.url | relative_url }}">
+        {% if post.image %}
+            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" class="article-image">
+        {% else %}
+            <div class="article-image article-image-placeholder"></div>
+        {% endif %}
+    </a>
+    <div class="article-body">
+        {% if cat %}<span class="category-pill">{{ cat.label }}</span>{% endif %}
+        <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+        <p class="muted">
+            {% if post.excerpt_text %}
+                {{ post.excerpt_text }}
+            {% else %}
+                {{ post.excerpt | strip_html | truncatewords: 30 }}
+            {% endif %}
+        </p>
+        <p class="byline">{{ post.date | date: "%b %d, %Y" }}</p>
+    </div>
+</article>

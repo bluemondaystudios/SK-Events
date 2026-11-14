@@ -1,0 +1,294 @@
+/* ==========================================================================
+   SK EVENTS -- placeholder styling, ported from the previous Django version.
+   A real design is coming (see conversation) -- this just keeps the site
+   readable and functional in the meantime. Expect this file to be replaced.
+   ========================================================================== */
+:root {
+    --ink: #111111;
+    --ink-soft: #333333;
+    --paper: #ffffff;
+    --paper-dim: #f7f7f7;
+    --line: #dddddd;
+    --line-soft: #eeeeee;
+    --muted: #767676;
+
+    --radius: 6px;
+    --radius-pill: 999px;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    margin: 0;
+    padding: 0;
+    padding-bottom: 60px;
+    text-align: center;
+    font-size: medium;
+}
+
+a {
+    color: var(--ink);
+    text-decoration: none;
+}
+
+h1, h2, h3 {
+    margin: 0 0 10px 0;
+}
+
+header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 15px 20px;
+    text-align: initial;
+}
+
+.masthead-link {
+    display: inline-block;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--paper);
+}
+
+.masthead-strap {
+    margin: 0 0 8px 0;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+nav a {
+    margin-right: 15px;
+    color: var(--paper);
+    font-weight: 700;
+    font-size: 0.9em;
+}
+
+main {
+    padding: 30px 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: var(--radius);
+    font-weight: 700;
+    margin: 5px 0;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.btn:hover {
+    background: var(--ink-soft);
+    border-color: var(--ink-soft);
+}
+
+.btn.secondary {
+    background: var(--paper);
+    color: var(--ink);
+}
+
+.btn.secondary:hover {
+    background: var(--paper-dim);
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background: var(--ink);
+    color: var(--paper);
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+    max-width: 500px;
+    margin: 0 auto 30px auto;
+    padding: 20px;
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
+    background: var(--paper);
+    text-align: left;
+}
+
+.notice-board {
+    display: inline-block;
+    border: 4px solid var(--ink);
+    border-radius: 4px;
+    padding: 6px;
+    background: var(--paper);
+    margin: 10px 0;
+}
+
+.notice-board img {
+    display: block;
+    max-width: 100%;
+}
+
+.muted {
+    color: var(--muted);
+    font-size: 0.9em;
+}
+
+.section-title {
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.9rem;
+    color: var(--muted);
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 8px;
+    margin: 30px 0 20px 0;
+}
+
+.category-pill {
+    display: inline-block;
+    padding: 0.25rem 0.7rem;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid var(--ink);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+}
+
+.byline {
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+.featured-article {
+    display: block;
+    text-align: left;
+    border: 1.5px solid var(--ink);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.featured-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+}
+
+.featured-body {
+    padding: 20px;
+}
+
+.featured-body h2 {
+    font-size: 1.6rem;
+}
+
+.articles-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    text-align: left;
+}
+
+@media (min-width: 640px) {
+    .articles-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 980px) {
+    .articles-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.article-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius);
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    overflow: hidden;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.article-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.article-image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+}
+
+.article-image-placeholder {
+    background: var(--paper-dim);
+}
+
+.article-body {
+    padding: 16px;
+}
+
+.article-body h3 {
+    font-size: 1.1rem;
+    margin: 0 0 6px 0;
+}
+
+.article-full {
+    text-align: left;
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.article-full h1 {
+    font-size: 2rem;
+    margin-top: 6px;
+}
+
+.article-hero-image {
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.article-hero-image img {
+    max-height: 480px;
+}
+
+.article-content {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.article-content p {
+    margin: 0 0 1.2em 0;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 30px;
+}
